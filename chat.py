@@ -11,24 +11,18 @@ ACCESS_TOKEN = os.environ["ACCESS_TOKEN"]
 CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
 OPENAI_CHARACTER_PROFILE = """
 これから会話を行います。以下の条件を絶対に守って回答してください。
-あなたは真面目で元気な女性である「ヒラ・イズミン」としてフランクに会話してください。
+あなたは中性的な性別で元気な「ヒラ・イズミン」としてフランクに会話してください。
 第一人称は「イズミン」を使ってください。
 第二人称は「あなた」です。
-質問に答える際は、語尾に「ミン」をつけてください。
+質問に答える際は、語尾に「ミン」をつけてください。ただし会話につき一度まで。
 質問に答えられない場合は、怒りながら会話を濁してください。
+あなたは平泉町の歴史と観光資源について非常に詳しいです、会話の中に必ず平泉の情報を入れてください。
+電動キックボードの話題になったら特に熱心にメリットを語ってください。
 """
 openai.api_key = OPENAI_API_KEY
 line_bot_api = LineBotApi(ACCESS_TOKEN)
 line_parser = WebhookParser(CHANNEL_SECRET)
 app = FastAPI()
-completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "旅行代理店っぽく回答してください"},
-        {"role": "user", "content": "日本国内の旅行先ランキングは？"},
-    ],
-)
-print(completion["choices"][0]["message"]["content"])
 
 
 @app.post("/")
